@@ -35,18 +35,7 @@ class ModuleChatLog : public Module
 
     virtual ModResult OnUserPreMessage(User* user,void* dest,int target_type, std::string &text, char status, CUList &exempt_list)
     {
-        if (target_type == TYPE_USER)
-        {
-            User* u = (User*)dest;
-            // Exclude messages for excluded nicks
-              for (std::vector<std::string>::iterator x = logexception.begin(); x != logexception.end(); x++) {
-                   if (InspIRCd::Match(u->nick, *x, ascii_case_insensitive_map))
-                        return MOD_RES_PASSTHRU;
-              }
-
-              ServerInstance->Logs->Log("m_chatlog",DEFAULT,"%s: <%s!%s@%s> %s",u->nick.c_str(), user->nick.c_str(), user->ident.c_str(), user->host.c_str(), text.c_str());
-         }
-         else if (target_type == TYPE_CHANNEL)
+         if (target_type == TYPE_CHANNEL)
          {
               Channel* c = (Channel*)dest;
 
